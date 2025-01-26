@@ -11,7 +11,7 @@ const App = () => {
   const lat = useLocationStore((state: ILocationStore) => state.Lat);
   const long = useLocationStore((state: ILocationStore) => state.Long);
   const setHeading = useLocationStore((state: ILocationStore) => state.setHeadng);
-  const update = useLocationStore((state: ILocationStore) => state.update);
+  const updateLocation = useLocationStore((state: ILocationStore) => state.update);
  
   const handleOrientation = async (event: DeviceOrientationEvent) => {
     if (event.absolute && event.alpha !== null) {
@@ -24,23 +24,12 @@ const App = () => {
   window.addEventListener("deviceorientationabsolute", handleOrientation);
   setInterval(async () => {
   
-    var result = await LocationService.SetCurrentLocation(lat,long);
+    var result = await LocationService.SetCurrentLocation(lat,long, window.navigator.onLine);
     if (result !== undefined){
-      update(result.Ref,result.Lat,result.Long,result.Location)
+      updateLocation(result.Ref,result.Lat,result.Long,result.Location)
     }
   }, 2500);
-  // useEffect(() => {
-   
-  //   const interval = setInterval(async () => {
-
-     
-     
-  //   }, 2500);
-
-  //   return () => { clearInterval(interval); }
-  // }, []);
-
-
+ 
   return (
     <>
     <LocationInfo/>

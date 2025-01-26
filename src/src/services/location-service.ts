@@ -37,26 +37,29 @@ export default class LocationService {
         return "Invalid Heading";
     }
 
-    static SetCurrentLocation = async (lat: number, long: number) => {
+    static SetCurrentLocation = async (lat: number, long: number, onLine: boolean) => {
         var uLatLongService = new UTMLatLng();
         var gps = await GPSConverter.GetGPSLocation();
         var utm = uLatLongService.ConvertLatLngToUtm(gps.Latitude, gps.Longitude, 1) as any;
-        if (this.lastLat !== lat && this.lastLong !==long){
-        this.lastLat = lat;
-        this.lastLong = long;
+        if (this.lastLat !== lat && this.lastLong !== long) {
+            this.lastLat = lat;
+            this.lastLong = long;
 
-        var location = await LocationService.LoadLocation(gps.Latitude, gps.Longitude);
+            var location = "Unkown Address";
+            
+            if (onLine) {
+                location=await LocationService.LoadLocation(gps.Latitude, gps.Longitude);
+            }
 
-        return {
-            Lat: gps.Latitude,
-            Long: gps.Longitude,
-            Ref: utm.EastRef + " " + utm.NorthRef,
-            Location: location
+            return {
+                Lat: gps.Latitude,
+                Long: gps.Longitude,
+                Ref: utm.EastRef + " " + utm.NorthRef,
+                Location: location
+            }
         }
     }
 
-
-    }
 
     static LoadLocation = async (lat: number, long: number) => {
 
@@ -65,15 +68,12 @@ export default class LocationService {
         try {
             var result = await fetch(url);
             var data = await result.json();
-
             return data[0].display_name;
-
-
         }
 
         catch (error: any) {
 
-            return;
+            return "Unkown Address";
         }
     }
 
