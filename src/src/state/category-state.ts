@@ -1,0 +1,56 @@
+
+export const NoteCategories = [
+  {
+    Name: "Information",
+    Initials: "INFO",
+    Bg: "bg-yellow-300",
+    Items: [{
+      Name: "Spot Fire",
+      Initials: "SPOT",
+      Bg: "bg-yellow-900",
+      Form: [{
+        Title: "Notes"
+      }]},
+      {
+        Name: "Smoke",
+        Initials: "SMOK",
+        Bg: "bg-yellow-900",
+        Form: [{
+          Title: "Notes"
+        },{
+          Title: "Heading"
+        },
+        {
+          Title: "Direction"
+        },
+        {
+          Title: "Fuel Level"
+        }]
+      }      
+    ]
+  },
+  {
+    Name: "INCIDENT",
+    Initials: "INC",
+    Bg: "bg-red-600",
+    Items: [{
+      Name: "Motor Vehicle Accident",
+      Initials: "MVA",
+      Bg: "bg-red-600",
+      Form: [{
+        Title: "Notes"
+      }]
+    }]
+
+  },
+  {
+    Name: "WEATHER",
+    Initials: "WEA",
+    Bg: "bg-green-600",
+    Form: [{
+      Title: "Temp"
+    },
+    { Title: "Notes" }]
+
+  }
+]
