@@ -8,22 +8,22 @@ function classNames(...classes: any[]) {
     return classes.filter(Boolean).join(' ')
 }
 
-const  NoteList = () => {
-    const currentNote = useNoteStore((state: INoteStore)=> state.CurrentNote);
-    const selectForm = useNoteStore((state: INoteStore)=> state.selectForm);
-    const deleteEntry = useNoteStore((state: INoteStore)=> state.deleteEntry);
-    const deleteAllNotes = useNoteStore((state: INoteStore)=> state.deleteAllNotes);
-    
-    if (currentNote === undefined || currentNote.Enteries === undefined){
-        return (<><NoteCategory/>
+const NoteList = () => {
+    const currentNote = useNoteStore((state: INoteStore) => state.CurrentNote);
+    const selectForm = useNoteStore((state: INoteStore) => state.selectForm);
+    const deleteEntry = useNoteStore((state: INoteStore) => state.deleteEntry);
+    const deleteAllNotes = useNoteStore((state: INoteStore) => state.deleteAllNotes);
+
+    if (currentNote === undefined || currentNote.Enteries === undefined) {
+        return (<><NoteCategory />
         </>);
     }
 
     const deleteRequest = (noteEntry: NoteEntry) => {
-        if (confirm("Delete '" + noteEntry.Name +"'?")) {
+        if (confirm("Delete '" + noteEntry.Name + "'?")) {
             deleteEntry(noteEntry);
         }
-    }    
+    }
 
     const deleteAll = () => {
         // To do: Replace with better UI, will
@@ -37,7 +37,7 @@ const  NoteList = () => {
         <>
             <ul role="list" className="grid grid-cols-1 gap-x-6 gap-y-8 lg:grid-cols-3 xl:gap-x-8">
                 {currentNote.Enteries.map((noteEntry: NoteEntry) => (
-                    <li key={noteEntry.Id} className="overflow-hidden rounded-xl border border-gray-200" onDoubleClick={()=>{selectForm(noteEntry)}}>
+                    <li key={noteEntry.Id} className="overflow-hidden rounded-xl border border-gray-200" onDoubleClick={() => { selectForm(noteEntry) }}>
                         <div className={classNames("flex items-center gap-x-4 border-b border-gray-900/5 p-6", noteEntry.BackgroundIcon)}>
 
                             <div className="text-sm font-medium leading-6 text-white uppercase">{noteEntry.Name}</div>
@@ -62,7 +62,7 @@ const  NoteList = () => {
                                 </MenuItems>
                             </Menu>
                         </div>
-                        
+
                         <dl className="-my-3 divide-y divide-gray-100 px-6 py-4 text-sm leading-6">
 
                             <div className="flex justify-between gap-x-4 py-3">
@@ -99,7 +99,7 @@ const  NoteList = () => {
                     </li>
                 ))}
                 <li>
-                    
+
                 </li>
             </ul>
             <div className='mt-10'>
@@ -108,7 +108,7 @@ const  NoteList = () => {
             </div>
 
             <FormEditor />
-            <NoteCategory/>
+            <NoteCategory />
 
         </>
     )

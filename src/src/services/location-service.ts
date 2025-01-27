@@ -46,9 +46,9 @@ export default class LocationService {
             this.lastLong = long;
 
             var location = "Unkown Address";
-            
+
             if (onLine) {
-                location=await LocationService.LoadLocation(gps.Latitude, gps.Longitude);
+                location = await LocationService.LoadLocation(gps.Latitude, gps.Longitude);
             }
 
             return {
@@ -60,7 +60,6 @@ export default class LocationService {
         }
     }
 
-
     static LoadLocation = async (lat: number, long: number) => {
 
         const url = "https://nominatim.openstreetmap.org/search?q=" + lat + " " + long + "&format=json";
@@ -70,12 +69,8 @@ export default class LocationService {
             var data = await result.json();
             return data[0].display_name;
         }
-
         catch (error: any) {
-
             return "Unkown Address";
         }
     }
-
-
 }

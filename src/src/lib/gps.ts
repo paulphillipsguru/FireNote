@@ -9,7 +9,7 @@ export interface UTMCoordinates {
     northing: number;
 }
 
-export class GPSConverter {    
+export class GPSConverter {
     static async GetGPSLocation(): Promise<Coordinates> {
         return new Promise<Coordinates>((resolve, reject) => {
             if ("geolocation" in navigator) {
@@ -27,7 +27,7 @@ export class GPSConverter {
                 reject(new Error("Geolocation is not supported by this browser."));
             }
         });
-    }        
+    }
 }
 
 export default GPSConverter;

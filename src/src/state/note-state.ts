@@ -31,19 +31,18 @@ export interface INoteStore {
 }
 
 export const useNoteStore = create(persist<INoteStore>(
-    
     (set, get) => ({
         ShowForm: false,
         ShowInfo: false,
-        FG:0,
-        ICFG:0,
+        FG: 0,
+        ICFG: 0,
         CategoryFormIsVisible: false,
         CurrentCategory: [] as any,
         CurrentNote: {} as Note,
         CurrentForm: [] as any,
         Notes: [],
         showInfo: () => {
-            set((state: INoteStore)=> ({
+            set((state: INoteStore) => ({
                 ShowInfo: !state.ShowInfo
             }));
         },
@@ -56,7 +55,7 @@ export const useNoteStore = create(persist<INoteStore>(
             set((state: INoteStore) => ({
                 CurrentNote: {
                     ...state.CurrentNote,
-                    Enteries: state.CurrentNote.Enteries.filter((src: NoteEntry) => src.Id !== entry.Id),                    
+                    Enteries: state.CurrentNote.Enteries.filter((src: NoteEntry) => src.Id !== entry.Id),
                 },
                 Notes: state.Notes.map((note) => note.Id === state.CurrentNote.Id ? state.CurrentNote : note)
 
@@ -75,12 +74,12 @@ export const useNoteStore = create(persist<INoteStore>(
 
         },
         closeCategory: () => {
-            set(()=>({                
+            set(() => ({
                 CategoryFormIsVisible: false,
                 CurrentCategory: []
             }))
         },
-        setCategory: (category: any,locationInfo: ILocationStore) => {
+        setCategory: (category: any, locationInfo: ILocationStore) => {
             const currentDate = new Date();
             if (category.Items !== undefined) {
                 set(() => ({
@@ -112,17 +111,17 @@ export const useNoteStore = create(persist<INoteStore>(
                 set((state: INoteStore) => {
                     const updateNote = () => {
                         const noteToUpdate = state.Notes.find((note) => note.Id === state.CurrentNote.Id);
-                
+
                         if (!noteToUpdate) {
                             throw new Error("Note not found"); // Handle case where note is not found
                         }
-                
+
                         // Update the note model
                         const updatedNote = {
                             ...noteToUpdate,
                             Enteries: [newEntry, ...(noteToUpdate.Enteries || [])], // Add new entry
                         };
-                
+
                         return updatedNote;
                     };
 
@@ -133,7 +132,7 @@ export const useNoteStore = create(persist<INoteStore>(
 
                     return {
                         CurrentForm: newEntry.Form,
-                        CurrentNote:updatedNote,
+                        CurrentNote: updatedNote,
                         CurrentCategory: undefined,
                         CategoryFormIsVisible: false,
                         Notes: updatedNotes
@@ -173,17 +172,17 @@ export const useNoteStore = create(persist<INoteStore>(
             set((state: INoteStore) => {
                 const deleteNote = (noteId: number) => {
                     const noteExists = state.Notes.some((note) => note.Id === noteId);
-            
+
                     if (!noteExists) {
                         throw new Error("Note not found"); // Handle case where note is not found
                     }
-            
+
                     // Filter out the note to delete
                     const updatedNotes = state.Notes.filter((note) => note.Id !== noteId);
-            
+
                     return updatedNotes;
                 };
-                  // Use the helper method to remove the note from the Notes array
+                // Use the helper method to remove the note from the Notes array
                 const updatedNotes = deleteNote(state.CurrentNote.Id);
 
                 return {
@@ -217,14 +216,11 @@ export const useNoteStore = create(persist<INoteStore>(
                 return { Notes: updatedNotes, CurrentNote: {} as Note }
             });
         }
-      
-
-
     }), {
-    name: "notes-storage", // Key for localStorage (required)
+    name: "notes-storage",
 
     onRehydrateStorage: () => {
         console.log("Rehydrating state from localStorage...");
-    }, // Debug or perform actions on rehydration (optional)
+    },
 }));
 

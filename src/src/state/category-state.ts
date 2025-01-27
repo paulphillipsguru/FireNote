@@ -7,4 +7,3 @@ export class FireFighter {
 }
 
 export const NoteCategories =FireFighter.generate();
-console.log(NoteCategories);

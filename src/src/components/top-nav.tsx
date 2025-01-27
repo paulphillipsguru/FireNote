@@ -1,4 +1,4 @@
-import { HomeIcon, PlusIcon,InformationCircleIcon } from '@heroicons/react/20/solid'
+import { HomeIcon, PlusIcon, InformationCircleIcon } from '@heroicons/react/20/solid'
 import { useNoteStore, INoteStore } from '../state/note-state'
 import StaticInfo from './static-info';
 
@@ -18,7 +18,6 @@ const TopNav = () => {
                     </a>
                 </div>
             </li>
-
             {currenteNote.Id > 0 ? (
                 <>
                     <li key="Current" className="flex">
@@ -84,14 +83,11 @@ const TopNav = () => {
 
                         </div>
                     </li>
-
                 </>
-
             ) : <></>}
 
         </ol> <StaticInfo />
     </nav>)
-
 }
 
 export default TopNav;

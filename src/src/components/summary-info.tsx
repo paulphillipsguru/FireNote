@@ -7,31 +7,28 @@ function classNames(...classes: any[]) {
 }
 
 const SummaryInfo = () => {
-  const notes = useNoteStore((state: INoteStore)=> state.Notes);
-  const addNote = useNoteStore((state: INoteStore)=> state.addNote);
-  const currentNote = useNoteStore((state: INoteStore)=> state.CurrentNote);
-  const setNote = useNoteStore((state: INoteStore)=> state.setCurrent);
-  const newRequest = () =>
-    {
-      // To Do: Replace with a nicer UI / Prompt
-      var newName = prompt("Enter a name");
-      if (newName !== null) {        
-        addNote(newName);
-        
-        //TimeState.State.
-      }
+  const notes = useNoteStore((state: INoteStore) => state.Notes);
+  const addNote = useNoteStore((state: INoteStore) => state.addNote);
+  const currentNote = useNoteStore((state: INoteStore) => state.CurrentNote);
+  const setNote = useNoteStore((state: INoteStore) => state.setCurrent);
+  const newRequest = () => {
+    // To Do: Replace with a nicer UI / Prompt
+    var newName = prompt("Enter a name");
+    if (newName !== null) {
+      addNote(newName);
+
+      //TimeState.State.
+    }
   }
 
   // if a note is currently selected then should should
   // not see the summary view
-  if (currentNote !== undefined && currentNote.Id >0){
+  if (currentNote !== undefined && currentNote.Id > 0) {
     return (<></>)
   }
   return (
     <>
-
       <div className="sticky top-5 mb-5 mt-1">
-        
         <div aria-hidden="true" className="absolute inset-0 flex items-center pl-5">
           <div className="w-full border-t border-gray-300" />
         </div>
@@ -59,11 +56,7 @@ const SummaryInfo = () => {
             )}
           >
             <div>
-              <span
-                className="inline-flex rounded-lg p-3 ring-4 ring-white" 
-              >
-
-              </span>
+              <span className="inline-flex rounded-lg p-3 ring-4 ring-white"/>
             </div>
             <div>
               <h3 className="text-base font-semibold leading-6 text-gray-900">
@@ -72,7 +65,6 @@ const SummaryInfo = () => {
                   {summary.Name} - {summary.Date}
                 </a>
               </h3>
-
             </div>
             <span
               aria-hidden="true"

@@ -1,34 +1,34 @@
 import { create } from 'zustand'
 import { persist } from "zustand/middleware";
 
-export interface ILocationStore { 
+export interface ILocationStore {
     Lat: number,
     Long: number,
     Address: string,
-    Ref:string,
+    Ref: string,
     Heading: string,
     OpsHeading: string,
-    update: (name: string, lat:number,long:number, address:string) => void;
-    setHeadng: (heading:string, opsHeading: string) => void;
+    update: (name: string, lat: number, long: number, address: string) => void;
+    setHeadng: (heading: string, opsHeading: string) => void;
 }
 
 export const useLocationStore = create(persist<ILocationStore>(
     (set) => ({
-        Lat:0,
-        Long:0,
+        Lat: 0,
+        Long: 0,
         Address: "",
         Heading: "",
-        OpsHeading:"",
+        OpsHeading: "",
         Ref: "",
-        setHeadng: (heading:string, opsHeading: string)=>{
-            set((state: ILocationStore) =>   ({
+        setHeadng: (heading: string, opsHeading: string) => {
+            set((state: ILocationStore) => ({
                 ...state,
                 Heading: heading,
                 OpsHeading: opsHeading
             }))
         },
-        update: (ref: string, lat: number,long:number, address:string) =>{
-            set(()=>({
+        update: (ref: string, lat: number, long: number, address: string) => {
+            set(() => ({
                 Lat: lat,
                 Long: long,
                 Ref: ref,

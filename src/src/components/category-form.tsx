@@ -17,8 +17,8 @@ const NoteCategory = () => {
         return (<></>)
     }
 
-    const addCategory =(category: any) => {
-        setCategory(category,locationStore);
+    const addCategory = (category: any) => {
+        setCategory(category, locationStore);
     }
 
     const classNames = (...classes: any[]) => {
@@ -52,7 +52,7 @@ const NoteCategory = () => {
                                             'flex w-16 flex-shrink-0 items-center justify-center rounded-l-md text-sm font-medium text-white',
                                         )}
                                     >
-                                        {category.Initials} 
+                                        {category.Initials}
                                     </div>
                                     <div className="flex flex-1 items-center justify-between truncate rounded-r-md border-b border-r border-t border-gray-200 bg-white" onClick={() => { addCategory(category) }}>
                                         <div className="flex-1 px-4 py-5 text-sm ">
@@ -86,7 +86,7 @@ const NoteCategory = () => {
 
                             </ul></>}
 
-                    <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">                       
+                    <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
                         <button
                             type="button"
                             data-autofocus
