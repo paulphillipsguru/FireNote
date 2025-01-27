@@ -12,9 +12,15 @@ The key features of Fire Note:
 4. If online, nearest address will be shown based on current location
 5. Current location, heading, direction and last known address recorded 
 
+> [!IMPORTANT]
+>
+> The app and documentation is still in Alpha and will continue to be updated.
+
+
+
 ## Initial Screen
 
-<img src="C:\Paul\Projects\FireNoteApp\assets\Home.jpg" alt="Home" style="zoom:25%;" />
+<img src="assets\Home.jpg" alt="Home" style="zoom:25%;" />
 
 1. 6 Digit Reference
 2. Heading 
@@ -24,3 +30,27 @@ The key features of Fire Note:
 
 ## Adding a note
 
+![NoteView](assets\NoteView.jpg)
+
+Once you have created an incident then you will be present with additional options:
+
+1. Home
+2. Title
+3. Add Note
+4. Information (information about Radios and other important information)
+
+To add a new note, click on the Plus Icon (3) and you will be present with the following:
+
+<img src="assets\Screenshot_20250127_185324_Chrome.jpg" alt="Screenshot_20250127_185324_Chrome" style="zoom:33%;" />
+
+You will be presented with multiple categories (above is just an example), in the above you will see "Communication", in this category you will see additional options such as Fire Ground.
+
+<img src="assets\Screenshot_20250127_190023_Chrome.jpg" alt="Screenshot_20250127_190023_Chrome" style="zoom:33%;" />
+
+Each category will have different set of inputs, for example, Fire Ground will ask for the channel for the fire ground. 
+
+<img src="C:\Paul\Projects\FireNoteApp\assets\Screenshot_20250127_190530_Chrome.jpg" alt="Screenshot_20250127_190530_Chrome" style="zoom:33%;" />
+
+You will also see the following note been added to the list of notes:
+
+<img src="assets\Screenshot_20250127_190850_Chrome.jpg" alt="Screenshot_20250127_190850_Chrome" style="zoom:33%;" />
