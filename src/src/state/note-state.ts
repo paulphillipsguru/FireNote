@@ -10,6 +10,9 @@ export interface INoteStore {
     CurrentNote: Note;
     Notes: Note[];
     CurrentForm: any[];
+    FG: number,
+    ICFG: number,
+    ShowInfo: boolean;
     setCategory: (category: any, locationInfo: ILocationStore) => void;
     closeCategory: () => void;
     updateForm: (formEntry: any) => void;
@@ -23,17 +26,27 @@ export interface INoteStore {
     setCurrent: (header: Note) => void;
     clearCurrentNote: () => void;
     findNote: (id: number) => Note | undefined;
+    showInfo: () => void;
+
 }
 
 export const useNoteStore = create(persist<INoteStore>(
     
     (set, get) => ({
         ShowForm: false,
+        ShowInfo: false,
+        FG:0,
+        ICFG:0,
         CategoryFormIsVisible: false,
         CurrentCategory: [] as any,
         CurrentNote: {} as Note,
         CurrentForm: [] as any,
         Notes: [],
+        showInfo: () => {
+            set((state: INoteStore)=> ({
+                ShowInfo: !state.ShowInfo
+            }));
+        },
         selectForm: (noteEntry: NoteEntry) => {
             set(() => ({
                 CurrentForm: noteEntry.Form
