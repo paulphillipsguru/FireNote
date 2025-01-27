@@ -49,8 +49,8 @@ You will be presented with multiple categories (above is just an example), in th
 
 Each category will have different set of inputs, for example, Fire Ground will ask for the channel for the fire ground. 
 
-<img src="C:\Paul\Projects\FireNoteApp\assets\Screenshot_20250127_190530_Chrome.jpg" alt="Screenshot_20250127_190530_Chrome" style="zoom:33%;" />
+<img src="assets/Screenshot_20250127_190530_Chrome.jpg" alt="Screenshot_20250127_190530_Chrome" style="zoom:33%;" />
 
 You will also see the following note been added to the list of notes:
 
-<img src="assets\Screenshot_20250127_190850_Chrome.jpg" alt="Screenshot_20250127_190850_Chrome" style="zoom:33%;" />
+<img src="assets/Screenshot_20250127_190850_Chrome.jpg" alt="Screenshot_20250127_190850_Chrome" style="zoom:33%;" />
