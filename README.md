@@ -30,7 +30,7 @@ The key features of Fire Note:
 
 ## Adding a note
 
-![NoteView](assets\NoteView.jpg)
+![NoteView](assets/NoteView.jpg)
 
 Once you have created an incident then you will be present with additional options:
 
