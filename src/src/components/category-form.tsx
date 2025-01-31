@@ -66,7 +66,7 @@ const NoteCategory = () => {
                         : <>
                             <ul role="list" className="w-full m-3 grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-1">
                                 {currentCategory?.map((category: any) => (<>
-                                    <li key={category.Name} className="col-span-1 flex rounded-md shadow-sm">
+                                    <li key={category.Name} className="col-span-1 flex rounded-md shadow-s mr-5">
                                         <div
                                             className={classNames(
                                                 category.Bg,

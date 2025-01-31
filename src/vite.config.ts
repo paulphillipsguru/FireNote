@@ -43,17 +43,17 @@ export default defineConfig({
     },
     manifest: {
       name: 'Fire Note',
-      short_name: 'FireNote',
+      short_name: 'Fire Note',
       description: 'Fire Note for Fire Fighters',
       theme_color: '#ffffff',
       icons: [
         {
-          src: '/icon-192x192.png',
+          src: '/fire_note_logo_192x192.png',
           sizes: '192x192',
           type: 'image/png',
         },
         {
-          src: '/icon-512x512.png',
+          src: '/fire_note_logo_512x512.png',
           sizes: '512x512',
           type: 'image/png',
         },

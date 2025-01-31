@@ -38,6 +38,7 @@ export const useNoteStore = create(persist<INoteStore>(
         ICFG: 0,
         CategoryFormIsVisible: false,
         CurrentCategory: [] as any,
+        CategoryPath: "",
         CurrentNote: {} as Note,
         CurrentForm: [] as any,
         Notes: [],
@@ -52,28 +53,37 @@ export const useNoteStore = create(persist<INoteStore>(
             }))
         },
         deleteEntry: (entry: NoteEntry) => {
-            set((state: INoteStore) => ({
-                CurrentNote: {
-                    ...state.CurrentNote,
-                    Enteries: state.CurrentNote.Enteries.filter((src: NoteEntry) => src.Id !== entry.Id),
-                },
-                Notes: state.Notes.map((note) => note.Id === state.CurrentNote.Id ? state.CurrentNote : note)
+            set((state: INoteStore) => {
+                {
+                    const currentNote = {
+                        ...state.CurrentNote,
+                        Enteries: state.CurrentNote.Enteries.filter((src: NoteEntry) => src.Id !== entry.Id),
+                    };
+                    return {
+                        CurrentNote: currentNote,
+                        Notes: state.Notes.map((note) => note.Id === state.CurrentNote.Id ? currentNote : note)
+                    }
 
-            }))
+                }
+            })
 
         },
         addEntry: (entry: NoteEntry) => {
-            set((state: INoteStore) => ({
-                CurrentNote: {
+            set((state: INoteStore) => {
+                var currentNote = {
                     ...state.CurrentNote,
                     Enteries: [entry, ...state.CurrentNote.Enteries],
-                    Notes: state.Notes.map((note) => note.Id === state.CurrentNote.Id ? state.CurrentNote : note)
-                } as Note
 
-            }));
+                } as Note;
+                return {
+                    CurrentNote: currentNote,
+                    Notes: state.Notes.map((note) => note.Id === state.CurrentNote.Id ? currentNote : note)
+                }
+            });
 
         },
         closeCategory: () => {
+
             set(() => ({
                 CategoryFormIsVisible: false,
                 CurrentCategory: []
@@ -81,6 +91,7 @@ export const useNoteStore = create(persist<INoteStore>(
         },
         setCategory: (category: any, locationInfo: ILocationStore) => {
             const currentDate = new Date();
+
             if (category.Items !== undefined) {
                 set(() => ({
                     CurrentCategory: category.Items
@@ -95,6 +106,7 @@ export const useNoteStore = create(persist<INoteStore>(
                     Heading: locationInfo?.Heading,
                     Date: currentDate.toLocaleString(),
                     Name: category.Name,
+                    Title: category.Title,
                     Category: "",
                     BackgroundIcon: category.Bg,
                     Content: "",

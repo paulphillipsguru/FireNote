@@ -52,6 +52,31 @@ const StaticInfo = () => {
 
                         </dl>
                       </div>
+                      <div>
+                        <h3 className="font-medium text-gray-900">ITASC</h3>
+                        <dl className="mt-2 divide-y divide-gray-200 border-b border-t border-gray-200">
+                          <div className="flex justify-between py-3 text-sm font-medium">
+                            <dt className="text-gray-500">Incident</dt>
+                            <dd className="text-gray-900">{currentNote?.Enteries?.find((entry: NoteEntry) => entry.Name == "ITASC")?.Form.find((f: any) => f.Title === "Incident").Value}</dd>
+                          </div>
+                          <div className="flex justify-between py-3 text-sm font-medium">
+                            <dt className="text-gray-500">Theats</dt>
+                            <dd className="text-gray-900">{currentNote?.Enteries?.find((entry: NoteEntry) => entry.Name == "ITASC")?.Form.find((f: any) => f.Title === "Threats").Value}</dd>
+                          </div>
+                          <div className="flex justify-between py-3 text-sm font-medium">
+                            <dt className="text-gray-500">Action</dt>
+                            <dd className="text-gray-900">{currentNote?.Enteries?.find((entry: NoteEntry) => entry.Name == "ITASC")?.Form.find((f: any) => f.Title === "Actions").Value}</dd>
+                          </div>
+                          <div className="flex justify-between py-3 text-sm font-medium">
+                            <dt className="text-gray-500">Support</dt>
+                            <dd className="text-gray-900">{currentNote?.Enteries?.find((entry: NoteEntry) => entry.Name == "ITASC")?.Form.find((f: any) => f.Title === "Support").Value}</dd>
+                          </div>
+                          <div className="flex justify-between py-3 text-sm font-medium">
+                            <dt className="text-gray-500">Command</dt>
+                            <dd className="text-gray-900">{currentNote?.Enteries?.find((entry: NoteEntry) => entry.Name == "ITASC")?.Form.find((f: any) => f.Title === "Command").Value}</dd>
+                          </div>
+                        </dl>
+                      </div>
                       <div className="flex">
                         <button
                           type="button"

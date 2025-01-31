@@ -8,6 +8,7 @@ export type NoteEntry = {
     Heading: string;
     Date: string;    
     Name: string;
+    Title: string;
     Category: string;
     BackgroundIcon: string;
     Content: string;

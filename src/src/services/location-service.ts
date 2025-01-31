@@ -62,6 +62,7 @@ export default class LocationService {
 
     static LoadLocation = async (lat: number, long: number) => {
 
+        return "";
         const url = "https://nominatim.openstreetmap.org/search?q=" + lat + " " + long + "&format=json";
 
         try {

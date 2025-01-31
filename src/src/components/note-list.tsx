@@ -40,7 +40,7 @@ const NoteList = () => {
                     <li key={noteEntry.Id} className="overflow-hidden rounded-xl border border-gray-200" onDoubleClick={() => { selectForm(noteEntry) }}>
                         <div className={classNames("flex items-center gap-x-4 border-b border-gray-900/5 p-6", noteEntry.BackgroundIcon)}>
 
-                            <div className="text-sm font-medium leading-6 text-white uppercase">{noteEntry.Name}</div>
+                            <div className="text-sm font-medium leading-6 text-white uppercase">{noteEntry.Title}</div>
                             <Menu as="div" className="relative ml-auto">
                                 <MenuButton className="-m-2.5 block p-2.5 text-gray-400 hover:text-gray-500">
                                     <span className="sr-only">Open options</span>
