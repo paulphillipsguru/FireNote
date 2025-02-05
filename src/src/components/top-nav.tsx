@@ -1,4 +1,4 @@
-import { HomeIcon, PlusIcon, InformationCircleIcon } from '@heroicons/react/20/solid'
+import { HomeIcon, PlusIcon, InformationCircleIcon,CalculatorIcon } from '@heroicons/react/20/solid'
 import { useNoteStore, INoteStore } from '../state/note-state'
 import StaticInfo from './static-info';
 
@@ -8,6 +8,7 @@ const TopNav = () => {
     const clearCurrentNote = useNoteStore((state: INoteStore) => state.clearCurrentNote);
     const showCategory = useNoteStore((state: INoteStore) => state.showCategory);
     const showInfo = useNoteStore((state: INoteStore) => state.showInfo);
+    const showGridCalc = useNoteStore((state: INoteStore) => state.showGridCalc);
     return (<nav aria-label="Breadcrumb" className="flex mt-5 sticky top-5 mb-5">
         <ol role="list" className="flex space-x-4 rounded-md bg-white px-6 shadow h-14">
             <li className="flex" onClick={clearCurrentNote}>
@@ -79,6 +80,28 @@ const TopNav = () => {
                                 className="ml-4 text-sm font-medium text-gray-500 hover:text-gray-700"
                             >
                                 <InformationCircleIcon aria-hidden="true" className="-ml-1 -mr-0.5 h-5 w-5 text-gray-400" />
+                            </a>
+
+                        </div>
+                    </li>
+                    <li key="showInfo" className="flex">
+
+                        <div className="flex items-center">
+                            <svg
+                                fill="currentColor"
+                                viewBox="0 0 24 44"
+                                preserveAspectRatio="none"
+                                aria-hidden="true"
+                                className="h-full w-6 flex-shrink-0 text-gray-200"
+                            >
+                                <path d="M.293 0l22 22-22 22h1.414l22-22-22-22H.293z" />
+                            </svg>
+                            <a
+                                href="#"
+                                onClick={showGridCalc}
+                                className="ml-4 text-sm font-medium text-gray-500 hover:text-gray-700"
+                            >
+                                <CalculatorIcon aria-hidden="true" className="-ml-1 -mr-0.5 h-5 w-5 text-gray-400" />
                             </a>
 
                         </div>

@@ -16,7 +16,7 @@ export class GPSConverter {
                 navigator.geolocation.getCurrentPosition(
                     (position: GeolocationPosition) => {
                         const latitude = position.coords.latitude;
-                        const longitude = position.coords.longitude;
+                        const longitude = position.coords.longitude;                        
                         resolve({ Latitude: latitude, Longitude: longitude });
                     },
                     (error: GeolocationPositionError) => {

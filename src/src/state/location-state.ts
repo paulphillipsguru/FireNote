@@ -4,25 +4,28 @@ import { persist } from "zustand/middleware";
 export interface ILocationStore {
     Lat: number,
     Long: number,
+    Deg:number,
     Address: string,
     Ref: string,
     Heading: string,
     OpsHeading: string,
     update: (name: string, lat: number, long: number, address: string) => void;
-    setHeadng: (heading: string, opsHeading: string) => void;
+    setHeadng: (deg:number, heading: string, opsHeading: string) => void;
 }
 
 export const useLocationStore = create(persist<ILocationStore>(
     (set) => ({
         Lat: 0,
         Long: 0,
+        Deg: 0,
         Address: "",
         Heading: "",
         OpsHeading: "",
         Ref: "",
-        setHeadng: (heading: string, opsHeading: string) => {
+        setHeadng: (deg: number,heading: string, opsHeading: string) => {
             set((state: ILocationStore) => ({
                 ...state,
+                Deg:deg,
                 Heading: heading,
                 OpsHeading: opsHeading
             }))

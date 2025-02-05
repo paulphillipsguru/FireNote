@@ -6,6 +6,7 @@ import LocationInfo from './components/location-info';
 import LocationService from './services/location-service';
 import { ILocationStore, useLocationStore } from './state/location-state';
 import { useNoteStore, INoteStore } from './state/note-state';
+import GridRefCalc from './components/grid-calc';
 
 
 const App = () => {
@@ -14,11 +15,13 @@ const App = () => {
   const currentNote = useNoteStore((state: INoteStore) => state.CurrentNote.Id);
   const setHeading = useLocationStore((state: ILocationStore) => state.setHeadng);
   const updateLocation = useLocationStore((state: ILocationStore) => state.update);
+
   const clearCache = () => {
     if ('serviceWorker' in navigator) {
       caches.keys().then((names) => {
         names.forEach((name) => caches.delete(name));
       });
+
       navigator.serviceWorker.getRegistrations().then((registrations) => {
         registrations.forEach((registration) => {
           registration.unregister();
@@ -27,9 +30,9 @@ const App = () => {
     }
   }
   const handleOrientation = async (event: DeviceOrientationEvent) => {
-    if (event.absolute && event.alpha !== null) {
+    if (event.absolute && event.alpha !== null) {      
       const compassHeading = 360 - event.alpha;
-      setHeading(compassHeading.toFixed(0) + " (" + LocationService.GetDirectionFromHeading(compassHeading) + ")", ((compassHeading + 180) % 360).toFixed(0) + " (" + LocationService.GetDirectionFromHeading((compassHeading + 180) % 360) + ")")
+      setHeading(compassHeading , compassHeading.toFixed(0) + " (" + LocationService.GetDirectionFromHeading(compassHeading) + ")", ((compassHeading + 180) % 360).toFixed(0) + " (" + LocationService.GetDirectionFromHeading((compassHeading + 180) % 360) + ")")
 
 
     }
@@ -38,7 +41,7 @@ const App = () => {
   setInterval(async () => {
 
     var result = await LocationService.SetCurrentLocation(lat, long, window.navigator.onLine);
-    if (result !== undefined) {
+    if (result !== undefined) {      
       updateLocation(result.Ref, result.Lat, result.Long, result.Location)
     }
   }, 2500);
@@ -50,6 +53,7 @@ const App = () => {
       <TopNav />
       <SummaryInfo />
       <NoteList />
+      <GridRefCalc/>
       
     {currentNote > 0 ? (
       <></>) : <button

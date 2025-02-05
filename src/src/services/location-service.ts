@@ -39,12 +39,11 @@ export default class LocationService {
 
     static SetCurrentLocation = async (lat: number, long: number, onLine: boolean) => {
         var uLatLongService = new UTMLatLng();
-        var gps = await GPSConverter.GetGPSLocation();
+        var gps = await GPSConverter.GetGPSLocation();        
         var utm = uLatLongService.ConvertLatLngToUtm(gps.Latitude, gps.Longitude, 1) as any;
         if (this.lastLat !== lat && this.lastLong !== long) {
             this.lastLat = lat;
             this.lastLong = long;
-
             var location = "Unkown Address";
 
             if (onLine) {

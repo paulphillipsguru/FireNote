@@ -13,6 +13,7 @@ export interface INoteStore {
     FG: number,
     ICFG: number,
     ShowInfo: boolean;
+    ShowGridCalc: boolean;
     setCategory: (category: any, locationInfo: ILocationStore) => void;
     closeCategory: () => void;
     updateForm: (formEntry: any) => void;
@@ -27,6 +28,7 @@ export interface INoteStore {
     clearCurrentNote: () => void;
     findNote: (id: number) => Note | undefined;
     showInfo: () => void;
+    showGridCalc: () => void;
 
 }
 
@@ -34,6 +36,7 @@ export const useNoteStore = create(persist<INoteStore>(
     (set, get) => ({
         ShowForm: false,
         ShowInfo: false,
+        ShowGridCalc: false,
         FG: 0,
         ICFG: 0,
         CategoryFormIsVisible: false,
@@ -42,6 +45,11 @@ export const useNoteStore = create(persist<INoteStore>(
         CurrentNote: {} as Note,
         CurrentForm: [] as any,
         Notes: [],
+        showGridCalc: () =>{
+            set((state: INoteStore) =>({
+                ShowGridCalc: !state.ShowGridCalc
+            }));
+        },
         showInfo: () => {
             set((state: INoteStore) => ({
                 ShowInfo: !state.ShowInfo
@@ -63,10 +71,8 @@ export const useNoteStore = create(persist<INoteStore>(
                         CurrentNote: currentNote,
                         Notes: state.Notes.map((note) => note.Id === state.CurrentNote.Id ? currentNote : note)
                     }
-
                 }
             })
-
         },
         addEntry: (entry: NoteEntry) => {
             set((state: INoteStore) => {
