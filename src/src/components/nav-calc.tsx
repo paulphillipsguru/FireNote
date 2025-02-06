@@ -1,15 +1,19 @@
-import { useState } from 'react'
 import { Dialog, DialogPanel, DialogTitle,Input  } from '@headlessui/react'
-import { XMarkIcon } from '@heroicons/react/24/outline'
+import { XMarkIcon ,ArrowLeftIcon,ArrowRightIcon,ArrowUpIcon,ArrowDownIcon} from '@heroicons/react/24/outline'
 import { INoteStore, useNoteStore } from '../state/note-state'
 import { useLocationStore,ILocationStore } from '../state/location-state'
-import { GridRefCalculator } from '../lib/gridRefCalculator'
-
-const GridRefCalc = () => {
-    const show = useNoteStore((state: INoteStore) => state.ShowGridCalc);
-    const showHide = useNoteStore((state: INoteStore) => state.showGridCalc);
+import { NavigationCalculator } from '../lib/navigationCalculator'
+import { formatDistance } from '../lib/formatDistance'
+const NavCalc = () => {
+    const show = useNoteStore((state: INoteStore) => state.ShowNavCalc);
+    const showHide = useNoteStore((state: INoteStore) => state.showNavCalc);
+    const navGridRef = useNoteStore((state: INoteStore) => state.NavGridRef);
+    const setGridRef = useNoteStore((state: INoteStore) => state.setNavRef);
     const locationInfo = useLocationStore((location: ILocationStore) => location);
-    const [dist, setDist] = useState(0);
+    
+
+    const info = NavigationCalculator.getDirectionAndDistance(locationInfo.Ref,navGridRef,locationInfo.Deg);
+    
     return (<>
      <Dialog open={show} onClose={() => { }} className="relative z-10">
       <div className="fixed inset-0" />
@@ -23,7 +27,7 @@ const GridRefCalc = () => {
               <div className="flex h-full flex-col overflow-y-scroll bg-white py-6 shadow-xl">
                 <div className="px-4 sm:px-6">
                   <div className="flex items-start justify-between">
-                    <DialogTitle className="text-base font-semibold leading-6 text-gray-900">Grid Calculator</DialogTitle>
+                    <DialogTitle className="text-base font-semibold leading-6 text-gray-900">Navigator Helper</DialogTitle>
                     <div className="ml-3 flex h-7 items-center">
                       <button
                         type="button"
@@ -47,20 +51,30 @@ const GridRefCalc = () => {
                             <dd className="text-gray-900">{locationInfo.Ref}</dd>
                           </div>                                                                          
                           <div className="flex justify-between py-3 text-sm font-medium">
-                            <dt className="text-gray-500">Heading</dt>
+                            <dt className="text-gray-500">Target</dt>
+                            <dd className="text-gray-900 float-right"><Input className="w-32 border" value={navGridRef} onChange={(e: any)=> setGridRef(e.target.value)}/></dd>
+                          </div>                          
+                          <div className="flex justify-between py-3 text-sm font-medium">
+                            <dt className="text-gray-500">Current Heading</dt>
                             <dd className="text-gray-900">{locationInfo.Deg.toFixed(0)}</dd>
                           </div>                          
                           <div className="flex justify-between py-3 text-sm font-medium">
                             <dt className="text-gray-500">Distance</dt>
-                            <dd className="text-gray-900 float-right"><Input type="number" className="w-32 border " onChange={(e: any)=> setDist(e.target.value)} data-focus data-hover/></dd>
+                            <dd className="text-gray-900 float-right">{formatDistance(info.distanceMeters)}</dd>
                           </div>                          
                           <div className="flex justify-between py-3 text-sm font-medium">
-                            <dt className="text-gray-500">New Reference</dt>
-                            <dd className="text-gray-900">{GridRefCalculator.moveByDistance(locationInfo.Ref,locationInfo.Deg,dist)}</dd>
+                            <dt className="text-gray-500">New Bearing Heading</dt>
+                            <dd className="text-gray-900">{info.bearingDeg.toFixed(0)} deg</dd>
                           </div>                                                                          
+                                                                                                
                         </dl>
                       </div>
-                      
+                      <div>
+                      {info.direction==="LEFT" ? <ArrowLeftIcon/> :<></>}
+                              {info.direction==="RIGHT" ? <ArrowRightIcon/> :<></>}
+                              {info.direction==="DOWN" ? <ArrowDownIcon/> :<></>}
+                              {info.direction==="UP" ? <ArrowUpIcon/> :<></>}
+                      </div>
                       <div className="flex">
                         <button
                           type="button"
@@ -82,4 +96,4 @@ const GridRefCalc = () => {
     </>)
 }
 
-export default GridRefCalc;
+export default NavCalc;

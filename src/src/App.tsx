@@ -7,6 +7,7 @@ import LocationService from './services/location-service';
 import { ILocationStore, useLocationStore } from './state/location-state';
 import { useNoteStore, INoteStore } from './state/note-state';
 import GridRefCalc from './components/grid-calc';
+import NavCalc from './components/nav-calc';
 
 
 const App = () => {
@@ -27,6 +28,8 @@ const App = () => {
           registration.unregister();
         });
       });
+
+      location.reload();
     }
   }
   const handleOrientation = async (event: DeviceOrientationEvent) => {
@@ -54,6 +57,7 @@ const App = () => {
       <SummaryInfo />
       <NoteList />
       <GridRefCalc/>
+      <NavCalc/>
       
     {currentNote > 0 ? (
       <></>) : <button

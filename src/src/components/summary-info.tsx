@@ -1,4 +1,4 @@
-import { PlusIcon, CalculatorIcon } from '@heroicons/react/20/solid'
+import { PlusIcon } from '@heroicons/react/20/solid'
 import { useNoteStore, INoteStore } from '../state/note-state'
 import { Note } from '../types/note-Type';
 
@@ -11,7 +11,6 @@ const SummaryInfo = () => {
   const addNote = useNoteStore((state: INoteStore) => state.addNote);
   const currentNote = useNoteStore((state: INoteStore) => state.CurrentNote);
   const setNote = useNoteStore((state: INoteStore) => state.setCurrent);
-  const showGridCalc = useNoteStore((state: INoteStore) => state.showGridCalc);
   const newRequest = () => {
     // To Do: Replace with a nicer UI / Prompt
     var newName = prompt("Enter a name");
@@ -41,13 +40,7 @@ const SummaryInfo = () => {
           >
             <PlusIcon aria-hidden="true" className="-ml-1 -mr-0.5 h-5 w-5 text-gray-400" />
           </button>
-          <button
-            type="button"
-            onClick={showGridCalc}
-            className="ml-5 inline-flex items-center gap-x-1.5 rounded-full bg-white px-3 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-          >
-            <CalculatorIcon aria-hidden="true" className="-ml-1 -mr-0.5 h-5 w-5 text-gray-400" />
-          </button>
+        
         </div>
       </div>
 
