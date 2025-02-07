@@ -1,7 +1,8 @@
 import { HomeIcon, PlusIcon, InformationCircleIcon, CalculatorIcon, ViewfinderCircleIcon } from '@heroicons/react/20/solid'
 import { useNoteStore, INoteStore } from '../state/note-state'
 import StaticInfo from './static-info';
-
+import LocationService from '../services/location-service';
+import { ILocationStore, useLocationStore } from '../state/location-state';
 
 const TopNav = () => {
     const currenteNote = useNoteStore((state: INoteStore) => state.CurrentNote);
@@ -10,9 +11,24 @@ const TopNav = () => {
     const showInfo = useNoteStore((state: INoteStore) => state.showInfo);
     const showGridCalc = useNoteStore((state: INoteStore) => state.showGridCalc);
     const showNavCalc = useNoteStore((state: INoteStore) => state.showNavCalc);
+    const updateAddress = useLocationStore((state: ILocationStore) => state.setAddress);
+    const refreshLocation = async () => {
+        updateAddress("SEARCHING....");
+        var result = await LocationService.SetCurrentLocation();
+        if (result !== undefined) {
+            var address = await LocationService.FindAddress(result.Lat, result.Long);
+            if (address !== undefined) {
+                updateAddress(address + " [" + result.Ref + "]");
+            } else {
+                updateAddress("ADDRESS NOT FOUND");
+            }
+        } else {
+            updateAddress("ADDRESS NOT FOUND");
+        }
+    }
     return (
-        <>         
-        <nav aria-label="Breadcrumb" className="flex mt-5  top-5 mb-5">
+        <>
+            <nav aria-label="Breadcrumb" className="flex mt-5  top-5 mb-5">
                 <ol role="list" className="flex space-x-4 rounded-md bg-white px-6 shadow h-14">
                     <li className="flex" onClick={clearCurrentNote}>
                         <div className="flex items-center">
@@ -42,40 +58,42 @@ const TopNav = () => {
                                         {currenteNote.Name}
                                     </a>
                                 </div>
-                            </li>                      
+                            </li>
                         </>
                     ) : <></>}
 
                 </ol> <StaticInfo />
             </nav>
-            <span className="isolate flex mb-5 sticky top-5 p-1">
-            {currenteNote.Id > 0 ? (<>
-                <button
-                    type="button" onClick={showCategory}
-                    className="relative inline-flex items-center rounded-l-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-10"
-                >
-                    <PlusIcon aria-hidden="true" className="-ml-1 mr-0.5 h-5 w-5 text-gray-400" />ADD
-                </button>
-                <button
-                    type="button" onClick={showInfo}
-                    className="relative -ml-px inline-flex items-center bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-10">
-                    <InformationCircleIcon aria-hidden="true" className="-ml-1 mr-0.5 h-5 w-5 text-gray-400" />INFO
-                </button></>) : <></>}
-                <button
-                    type="button" onClick={showGridCalc}
-                    className="relative -ml-px inline-flex items-center rounded-r-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-10"
-                >
-                    <CalculatorIcon aria-hidden="true" className="-ml-1 mr-0.5 h-5 w-5 text-gray-400" />GRID
-                </button>
-                <button
-                    type="button" onClick={showNavCalc}
-                    className="relative -ml-px inline-flex items-center rounded-r-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-10"
-                >
-                    <ViewfinderCircleIcon aria-hidden="true" className="-ml-1 mr-0.5 h-5 w-5 text-gray-400" />NAV
-                </button>
 
-            
-        </span></>)
+            {currenteNote.Id > 0 ? (<>
+                <span className="isolate flex mb-5 p-1">
+                    <button type="button" onClick={showCategory}
+                        className="relative inline-flex items-center rounded-l-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-10"
+                    >
+                        <PlusIcon aria-hidden="true" className="-ml-1 mr-0.5 h-5 w-5 text-gray-400" />ADD
+                    </button>
+                    <button type="button" onClick={showInfo}
+                        className="relative -ml-px inline-flex items-center bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-10">
+                        <InformationCircleIcon aria-hidden="true" className="-ml-1 mr-0.5 h-5 w-5 text-gray-400" />INFO
+                    </button></span></>)
+                : <></>}
+                <span className="isolate flex mb-5 p-1">
+            <button type="button" onClick={showGridCalc}
+                className="relative -ml-px inline-flex items-center rounded-r-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-10"
+            >
+                <CalculatorIcon aria-hidden="true" className="-ml-1 mr-0.5 h-5 w-5 text-gray-400" />GRID
+            </button>
+            <button type="button" onClick={showNavCalc}
+                className="relative -ml-px inline-flex items-center rounded-r-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-10"
+            >
+                <ViewfinderCircleIcon aria-hidden="true" className="-ml-1 mr-0.5 h-5 w-5 text-gray-400" />NAV
+            </button>
+            <button type="button" onClick={refreshLocation}
+                className="relative -ml-px inline-flex items-center rounded-r-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-10"
+            >
+                <ViewfinderCircleIcon aria-hidden="true" className="-ml-1 mr-0.5 h-5 w-5 text-gray-400" />GET ADDRESS
+            </button>
+        </span ></>)
 }
 
 export default TopNav;

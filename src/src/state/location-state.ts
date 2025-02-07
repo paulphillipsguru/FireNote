@@ -9,7 +9,8 @@ export interface ILocationStore {
     Ref: string,
     Heading: string,
     OpsHeading: string,
-    update: (name: string, lat: number, long: number, address: string) => void;
+    update: (name: string, lat: number, long: number) => void;
+    setAddress: (address: string) => void;
     setHeadng: (deg:number, heading: string, opsHeading: string) => void;
 }
 
@@ -22,6 +23,12 @@ export const useLocationStore = create(persist<ILocationStore>(
         Heading: "",
         OpsHeading: "",
         Ref: "",
+        setAddress: (address:string)=>{
+            set((state: ILocationStore) =>({
+                ...state,
+                Address: address
+            }))
+        },
         setHeadng: (deg: number,heading: string, opsHeading: string) => {
             set((state: ILocationStore) => ({
                 ...state,
@@ -30,12 +37,13 @@ export const useLocationStore = create(persist<ILocationStore>(
                 OpsHeading: opsHeading
             }))
         },
-        update: (ref: string, lat: number, long: number, address: string) => {
-            set(() => ({
+        update: (ref: string, lat: number, long: number) => {
+            set((state:ILocationStore) => ({
+                ...state, 
                 Lat: lat,
                 Long: long,
                 Ref: ref,
-                Address: address
+                
             }));
         }
 

@@ -1,4 +1,3 @@
-
 import GPSConverter from '../lib/gps';
 import UTMLatLng from '../lib/utm';
 
@@ -37,31 +36,21 @@ export default class LocationService {
         return "Invalid Heading";
     }
 
-    static SetCurrentLocation = async (lat: number, long: number, onLine: boolean) => {
+    static SetCurrentLocation = async () => {
         var uLatLongService = new UTMLatLng();
-        var gps = await GPSConverter.GetGPSLocation();        
+        var gps = await GPSConverter.GetGPSLocation();
         var utm = uLatLongService.ConvertLatLngToUtm(gps.Latitude, gps.Longitude, 1) as any;
-        if (this.lastLat !== lat && this.lastLong !== long) {
-            this.lastLat = lat;
-            this.lastLong = long;
-            var location = "Unkown Address";
 
-            if (onLine) {
-                location = await LocationService.LoadLocation(gps.Latitude, gps.Longitude);
-            }
+        return {
+            Lat: gps.Latitude,
+            Long: gps.Longitude,
+            Ref: utm.EastRef + " " + utm.NorthRef
 
-            return {
-                Lat: gps.Latitude,
-                Long: gps.Longitude,
-                Ref: utm.EastRef + " " + utm.NorthRef,
-                Location: location
-            }
         }
     }
 
-    static LoadLocation = async (lat: number, long: number) => {
+    static FindAddress = async (lat: number, long: number) => {
 
-        return "";
         const url = "https://nominatim.openstreetmap.org/search?q=" + lat + " " + long + "&format=json";
 
         try {

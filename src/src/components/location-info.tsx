@@ -20,8 +20,9 @@ const LocationInfo = () => {
           </dd>
         </div>
       </dl>
-      <p className="text-left text-sm mt-2">{locationInfo.Address}</p>
+      <p className="text-left text-sm mt-2">LAST ADDRESS: <strong>{locationInfo.Address.toUpperCase()}</strong></p>
     </div>
+    
   </>)
 }
 

@@ -87,13 +87,7 @@ const NoteList = () => {
                                 <dd className="flex items-start gap-x-2">
                                     <div className="font-medium text-gray-900">{noteEntry.Ref} / {noteEntry.Heading}  </div>
                                 </dd>
-                            </div>
-                            <div className="flex justify-between gap-x-4 py-3">
-                                <dt className="text-gray-500">Location</dt>
-                                <dd className="flex items-start gap-x-2">
-                                    <div className="font-medium text-gray-900">{noteEntry.CurrentLocation}</div>
-                                </dd>
-                            </div>
+                            </div>                          
 
                         </dl>
                     </li>
