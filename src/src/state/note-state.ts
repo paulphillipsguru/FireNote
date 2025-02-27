@@ -16,11 +16,14 @@ export interface INoteStore {
     ShowGridCalc: boolean;
     ShowNavCalc: boolean;
     NavGridRef: string;
+    ShowItascForm: boolean;
+    ShowFireInfo: boolean;
     setCategory: (category: any, locationInfo: ILocationStore) => void;
     closeCategory: () => void;
     updateForm: (formEntry: any) => void;
     selectForm: (noteEntry: NoteEntry) => void;
     showCategory: () => void;
+    showFireReading:()=>void;
     hideForm: () => void;
     addEntry: (entry: NoteEntry) => void;
     deleteEntry: (entry: NoteEntry) => void;
@@ -33,6 +36,13 @@ export interface INoteStore {
     showGridCalc: () => void;
     showNavCalc: () => void;
     setNavRef: (ref: string) => void;
+    showItaskForm: () => void;
+    setTemp: (value: number) => void;
+    setRH: (value: number) => void;
+    setWind: (value: number) => void;
+    setFuelLoad: (value: number) => void;
+    setDrought: (value: number) => void;
+    setSlope: (value: number) => void;
 }
 
 export const useNoteStore = create(persist<INoteStore>(
@@ -41,7 +51,9 @@ export const useNoteStore = create(persist<INoteStore>(
         ShowInfo: false,
         ShowGridCalc: false,
         ShowNavCalc: false,
-        NavGridRef:"",
+        ShowItascForm: false,
+        ShowFireInfo: false,
+        NavGridRef: "",
         FG: 0,
         ICFG: 0,
         CategoryFormIsVisible: false,
@@ -50,18 +62,114 @@ export const useNoteStore = create(persist<INoteStore>(
         CurrentNote: {} as Note,
         CurrentForm: [] as any,
         Notes: [],
-        showGridCalc: () =>{
-            set((state: INoteStore) =>({
+        setTemp: (value: number) => {
+            set((state: INoteStore) => {
+                var newNote = {
+                    ...state.CurrentNote,
+                    Temp: value
+                } as Note;
+                
+                
+                return {
+                    CurrentNote: newNote,
+                     Notes: state.Notes.map((note) => note.Id === state.CurrentNote.Id ? newNote : note)
+                };
+
+            })
+        },
+        setRH: (value: number) => {
+            set((state: INoteStore) => {
+                var newNote = {
+                    ...state.CurrentNote,
+                    RH: value
+                } as Note;
+
+                return {
+                    CurrentNote: newNote,
+                    Notes: state.Notes.map((note) => note.Id === state.CurrentNote.Id ? newNote : note)
+                };
+
+            })
+        },
+        setWind: (value: number) => {
+            set((state: INoteStore) => {
+                var newNote = {
+                    ...state.CurrentNote,
+                    Wind: value
+                } as Note;
+
+                return {
+                    CurrentNote: newNote,
+                    Notes: state.Notes.map((note) => note.Id === state.CurrentNote.Id ? newNote : note)
+                };
+
+            })
+        },
+        setFuelLoad: (value: number) => {
+            set((state: INoteStore) => {
+                var newNote = {
+                    ...state.CurrentNote,
+                    FuelLoad: value
+                } as Note;
+
+                return {
+                    CurrentNote: newNote,
+                    Notes: state.Notes.map((note) => note.Id === state.CurrentNote.Id ? newNote : note)
+                };
+
+            })
+        },
+        setDrought: (value: number) => {
+            set((state: INoteStore) => {
+                var newNote = {
+                    ...state.CurrentNote,
+                    Drought: value
+                } as Note;
+
+                return {
+                    CurrentNote: newNote,
+                    Notes: state.Notes.map((note) => note.Id === state.CurrentNote.Id ? newNote : note)
+                };
+
+            })
+        },
+        setSlope: (value: number) => {
+            set((state: INoteStore) => {
+                var newNote = {
+                    ...state.CurrentNote,
+                    Slope: value
+                } as Note;
+
+                return {
+                    CurrentNote: newNote,
+                    Notes: state.Notes.map((note) => note.Id === state.CurrentNote.Id ? newNote : note)
+                };
+
+            })
+        },
+        showItaskForm: () => {
+
+            set((state: INoteStore) => ({
+                ShowItascForm: !state.ShowItascForm
+            }));
+        },
+        showFireReading: () => {
+            set((state: INoteStore) => ({
+                ShowFireInfo: !state.ShowFireInfo
+            }));
+        },
+        showGridCalc: () => {
+            set((state: INoteStore) => ({
                 ShowGridCalc: !state.ShowGridCalc
             }));
         },
-        setNavRef: (ref: string)=>{
-            set(()=>({
+        setNavRef: (ref: string) => {
+            set(() => ({
                 NavGridRef: ref
             }))
         },
-        showNavCalc: () =>{
-            set((state: INoteStore) =>({
+        showNavCalc: () => {
+            set((state: INoteStore) => ({
                 ShowNavCalc: !state.ShowNavCalc
             }));
         },
@@ -104,7 +212,6 @@ export const useNoteStore = create(persist<INoteStore>(
 
         },
         closeCategory: () => {
-
             set(() => ({
                 CategoryFormIsVisible: false,
                 CurrentCategory: []
@@ -174,13 +281,19 @@ export const useNoteStore = create(persist<INoteStore>(
             }
         },
         updateForm: (formEntry: any) => {
-            set((state: INoteStore) => ({
-                CurrentNote: {
+            set((state: INoteStore) => {        
+                
+                let currentNote={
                     ...state.CurrentNote,
                     Enteries: state.CurrentNote.Enteries.map((entry: any) => entry.Id === formEntry.Id ? { ...entry, formEntry } : entry)
-                },
-                Notes: state.Notes.map((note) => note.Id === state.CurrentNote.Id ? state.CurrentNote : note)
-            }))
+                };
+                const result = {
+                    CurrentNote: currentNote,
+                    Notes: state.Notes.map((note) => note.Id === state.CurrentNote.Id ? currentNote : note)
+                }
+                console.log(result);
+                return result;
+            })
         },
 
 
@@ -189,11 +302,13 @@ export const useNoteStore = create(persist<INoteStore>(
                 CurrentForm: []
             }));
         },
-        setCurrent: (note: Note) => {
-            set((state: INoteStore) => ({
-                CurrentNote: note,
-                Notes: state.Notes.map((note) => note.Id === state.CurrentNote.Id ? state.CurrentNote : note)
-            }))
+        setCurrent: (newNote: Note) => {
+            set((state: INoteStore) => { 
+                
+                return {
+                CurrentNote: newNote,
+                Notes: state.Notes.map((note) => note.Id === state.CurrentNote.Id ? newNote : note)
+            }})
         },
         showCategory: () => {
             set(() => ({

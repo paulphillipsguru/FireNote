@@ -67,7 +67,7 @@ if (!self.define) {
     });
   };
 }
-define(['./workbox-417a7fbf'], (function (workbox) { 'use strict';
+define(['./workbox-9cd1dcf3'], (function (workbox) { 'use strict';
 
   self.skipWaiting();
   workbox.clientsClaim();
@@ -82,7 +82,7 @@ define(['./workbox-417a7fbf'], (function (workbox) { 'use strict';
     "revision": "3ca0b8505b4bec776b69afdba2768812"
   }, {
     "url": "index.html",
-    "revision": "0.38l1n1msp5o"
+    "revision": "0.cauq46cr9m8"
   }], {});
   workbox.cleanupOutdatedCaches();
   workbox.registerRoute(new workbox.NavigationRoute(workbox.createHandlerBoundToURL("index.html"), {
@@ -104,13 +104,17 @@ define(['./workbox-417a7fbf'], (function (workbox) { 'use strict';
     request
   }) => request.destination === "style", new workbox.CacheFirst({
     "cacheName": "css-cache",
-    plugins: []
+    plugins: [new workbox.BackgroundSyncPlugin("css-cacheRefresh", {
+      maxRetentionTime: 1440
+    })]
   }), 'GET');
   workbox.registerRoute(({
     request
   }) => request.destination === "image", new workbox.CacheFirst({
     "cacheName": "image-cache",
-    plugins: []
+    plugins: [new workbox.BackgroundSyncPlugin("image-cacheRefresh", {
+      maxRetentionTime: 1440
+    })]
   }), 'GET');
 
 }));

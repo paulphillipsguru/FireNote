@@ -4,6 +4,7 @@ import { useNoteStore, INoteStore } from '../state/note-state'
 import { NoteEntry } from '../types/note-Type';
 import FormEditor from './form-editor';
 import NoteCategory from './category-form';
+
 function classNames(...classes: any[]) {
     return classes.filter(Boolean).join(' ')
 }
@@ -12,8 +13,7 @@ const NoteList = () => {
     const currentNote = useNoteStore((state: INoteStore) => state.CurrentNote);
     const selectForm = useNoteStore((state: INoteStore) => state.selectForm);
     const deleteEntry = useNoteStore((state: INoteStore) => state.deleteEntry);
-    const deleteAllNotes = useNoteStore((state: INoteStore) => state.deleteAllNotes);
-
+    const deleteAllNotes = useNoteStore((state: INoteStore) => state.deleteAllNotes);    
     if (currentNote === undefined || currentNote.Enteries === undefined) {
         return (<><NoteCategory />
         </>);
@@ -35,6 +35,7 @@ const NoteList = () => {
 
     return (
         <>
+          
             <ul role="list" className="grid grid-cols-1 gap-x-6 gap-y-8 lg:grid-cols-3 xl:gap-x-8">
                 {currentNote.Enteries.map((noteEntry: NoteEntry) => (
                     <li key={noteEntry.Id} className="overflow-hidden rounded-xl border border-gray-200" onDoubleClick={() => { selectForm(noteEntry) }}>
@@ -97,13 +98,14 @@ const NoteList = () => {
                 </li>
             </ul>
             <div className='mt-10'>
-                <Button className="rounded-md bg-red-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                <Button className="rounded-md bg-red-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                     onClick={() => deleteAll()}>Delete All?</Button>
             </div>
 
             <FormEditor />
             <NoteCategory />
-
+            
+           
         </>
     )
 }

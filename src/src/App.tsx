@@ -5,30 +5,18 @@ import NoteList from './components/note-list';
 import LocationInfo from './components/location-info';
 import LocationService from './services/location-service';
 import { ILocationStore, useLocationStore } from './state/location-state';
-import { useNoteStore, INoteStore } from './state/note-state';
+import { useNoteStore, INoteStore } from './state/note-state'
 import GridRefCalc from './components/grid-calc';
 import NavCalc from './components/nav-calc';
+import Weather from './components/weather-form';
+import Popup from './components/shared/dialog';
 
-const App = () => {  
-  const currentNote = useNoteStore((state: INoteStore) => state.CurrentNote.Id);
+const App = () => {
   const setHeading = useLocationStore((state: ILocationStore) => state.setHeadng);
-  const updateLocation = useLocationStore((state: ILocationStore) => state.update);  
+  const updateLocation = useLocationStore((state: ILocationStore) => state.update);
+  const showItasc = useNoteStore((state: INoteStore) => state.ShowItascForm);
+  const hideShowItaskForm = useNoteStore((state: INoteStore) => state.showItaskForm);
 
-  const clearCache = () => {
-    if ('serviceWorker' in navigator) {
-      caches.keys().then((names) => {
-        names.forEach((name) => caches.delete(name));
-      });
-
-      navigator.serviceWorker.getRegistrations().then((registrations) => {
-        registrations.forEach((registration) => {
-          registration.unregister();
-        });
-      });
-
-      location.reload();
-    }
-  }
   const handleOrientation = async (event: DeviceOrientationEvent) => {
     if (event.absolute && event.alpha !== null) {
       const compassHeading = 360 - event.alpha;
@@ -47,23 +35,16 @@ const App = () => {
 
 
   return (
-    <>
+    <>      
+      <Popup isOpen={showItasc} title="Weather" onClose={hideShowItaskForm}>
+        <Weather />
+      </Popup>
       <LocationInfo />
       <TopNav />
       <SummaryInfo />
       <NoteList />
       <GridRefCalc />
       <NavCalc />
-
-      {currentNote > 0 ? (
-        <></>) : <button
-          type="button"
-          data-autofocus
-          onClick={clearCache}
-          className="rounded-md mt-5 bg-green-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500  focus-visible:outline-offset-2 focus-visible:outline-indigo-6006"
-        >
-        Refresh
-      </button>}
     </>
   )
 }

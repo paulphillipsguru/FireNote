@@ -7,14 +7,18 @@ export default defineConfig({
   plugins: [react(), tailwindcss(),  VitePWA({
     registerType: 'autoUpdate', // Auto-updates the service worker
     devOptions: {
-      enabled: true, // Enable PWA in development
+      enabled: false, // Enable PWA in development
     },
+    selfDestroying: false,
     workbox: {
+      
       runtimeCaching: [
         {
           urlPattern: ({ request }) => request.destination === 'document',
           handler: 'NetworkFirst',
+          
           options: {
+            
             cacheName: 'html-cache',
           },
         },
@@ -30,6 +34,12 @@ export default defineConfig({
           handler: 'CacheFirst',
           options: {
             cacheName: 'css-cache',
+            backgroundSync: {
+              name: 'css-cacheRefresh',
+              options: {
+                maxRetentionTime: 24 * 60
+              }
+            }
           },
         },
         {
@@ -37,6 +47,12 @@ export default defineConfig({
           handler: 'CacheFirst',
           options: {
             cacheName: 'image-cache',
+            backgroundSync: {
+              name: 'image-cacheRefresh',
+              options: {
+                maxRetentionTime: 24 * 60
+              }
+            }
           },
         },
       ],

@@ -8,6 +8,7 @@ const StaticInfo = () => {
   const showInfo = useNoteStore((state: INoteStore) => state.showInfo);
   const currentNote = useNoteStore((state: INoteStore) => state.CurrentNote)
 
+
   return (
     <Dialog open={info} onClose={() => { }} className="relative z-10">
       <div className="fixed inset-0" />
@@ -85,6 +86,8 @@ const StaticInfo = () => {
                         >
                           Close
                         </button>
+
+                     
                       </div>
                     </div>
                   </div>
